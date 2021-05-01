@@ -1,0 +1,16 @@
+import onvif
+from onvif import ONVIFCamera
+
+# disable events as they might restart buggy cameras
+class ONVIFCamera(onvif.ONVIFCamera):
+    def create_events_service(self, transport=None):
+        raise RuntimeError("Events disabled - they can crash buggy cameras")
+
+def print_help(filename):
+    print(open('docs/' + filename + '.txt', 'r', encoding='utf8').read())
+
+def tips():
+    print_help('tips')
+
+tips()
+

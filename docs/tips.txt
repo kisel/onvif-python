@@ -1,0 +1,10 @@
+import onvif
+#ONVIFCamera already imported with disabled Events service
+#from onvif import ONVIFCamera
+
+cam = ONVIFCamera('MY_CAM_IP', 8899, 'admin', '')
+cam = ONVIFCamera('MY_CAM_IP', 80, 'admin', '')
+
+tips() for this message
+commands() for typical usage examples
+docs() for onvif docmentation links
