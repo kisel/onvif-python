@@ -1,12 +1,3 @@
-# onvif-python console
-
-Onvif python interactive terminal based on python-onvif-zeep
-
-#### Usage
-```bash
-docker run --net=host -it --rm ghcr.io/kisel/onvif-python
-```
-
 ### Snipets
 ```python
 # connect to the camera
@@ -43,7 +34,6 @@ cam.devicemgmt.SetNetworkInterfaces({
         'DHCP': True,
     },  
 }})
-cam.devicemgmt.GetNetworkInterfaces()
 cam.devicemgmt.SystemReboot()
 ```
 
@@ -75,16 +65,3 @@ cam.devicemgmt.SetSystemDateAndTime({
 cam.devicemgmt.GetSystemDateAndTime()
 ```
 
-### Docs
-
-- https://www.onvif.org/ver10/device/wsdl/devicemgmt.wsdl
-- https://www.onvif.org/onvif/ver20/util/operationIndex.html
-- https://github.com/FalkTannhaeuser/python-onvif-zeep
-
-
-# Build & run
-
-```bash
-docker build -t onvif .
-docker run -i -t --rm --net host onvif
-```

@@ -2,9 +2,12 @@ import onvif
 #ONVIFCamera already imported with disabled Events service
 #from onvif import ONVIFCamera
 
-cam = ONVIFCamera('MY_CAM_IP', 8899, 'admin', '')
-cam = ONVIFCamera('MY_CAM_IP', 80, 'admin', '')
+# factory-default static cam IP is 192.168.1.10
+cam_ip = '192.168.1.10'
+cam = ONVIFCamera(cam_ip, 8899, 'admin', '')
+cam = ONVIFCamera(cam_ip, 80, 'admin', '')
 
 tips() for this message
-commands() for typical usage examples
-docs() for onvif docmentation links
+snip() for typical code snippets
+docs() for onvif/lib docmentation links
+
