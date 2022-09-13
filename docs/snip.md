@@ -93,13 +93,7 @@ for profile in profiles:
 
 #### Get stream URIs
 ```python
-config = cam.media.GetMetadataConfigurations()[0]
-config.Analytics = True
-req = cam.media.create_type('SetMetadataConfiguration')
-req.Configuration = config
-req.ForcePersistence = True
-cam.media.SetMetadataConfiguration(req)
-
+cam.create_media_service()
 for profile in cam.media.GetProfiles():
     print('profile %s' % profile.token)
     if not hasattr(profile, 'MetadataConfiguration'):
