@@ -36,6 +36,18 @@ cam.devicemgmt.SetNetworkInterfaces({
 }})
 cam.devicemgmt.SystemReboot()
 ```
+#### Set Manual IP address
+```python
+cam.devicemgmt.SetNetworkInterfaces(dict(
+    InterfaceToken='eth0',    
+    NetworkInterface=dict(         
+        IPv4=dict(
+            Enabled=True,
+            Manual=[dict(
+                Address='192.168.1.10',
+                PrefixLength=24)],
+            DHCP=False))))
+```
 
 ### Setting current datetime
 ```python
@@ -65,3 +77,40 @@ cam.devicemgmt.SetSystemDateAndTime({
 cam.devicemgmt.GetSystemDateAndTime()
 ```
 
+### Get info
+
+#### Get snapshot URIs
+see https://www.onvif.org/onvif/ver10/media/wsdl/media.wsdl
+```python
+media_service = cam.create_media_service()
+profiles = media_service.GetProfiles()
+for profile in profiles:
+    snapshot = media_service.create_type('GetSnapshotUri')
+    snapshot.ProfileToken = profile.token
+    output_snap_uri = media_service.GetSnapshotUri(snapshot)
+    print("URI for snapshot: {}".format(output_snap_uri.Uri))
+```
+
+#### Get stream URIs
+```python
+config = cam.media.GetMetadataConfigurations()[0]
+config.Analytics = True
+req = cam.media.create_type('SetMetadataConfiguration')
+req.Configuration = config
+req.ForcePersistence = True
+cam.media.SetMetadataConfiguration(req)
+
+for profile in cam.media.GetProfiles():
+    print('profile %s' % profile.token)
+    if not hasattr(profile, 'MetadataConfiguration'):
+        cam.media.AddMetadataConfiguration({
+            'ProfileToken': profile.token,
+            'ConfigurationToken': config.token,
+        })  
+    resp = cam.media.GetStreamUri({
+        'StreamSetup': {'Stream': 'RTP-Unicast', 'Transport': {'Protocol': 'RTSP'}},
+        'ProfileToken': profile.token,
+    })  
+    print(resp.Uri)
+
+```
